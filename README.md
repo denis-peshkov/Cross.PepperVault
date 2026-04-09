@@ -1,44 +1,98 @@
-[![License](https://img.shields.io/github/license/denis-peshkov/Cross.Identity)](LICENSE)
-[![GitHub Release Date](https://img.shields.io/github/release-date/denis-peshkov/Cross.Identity?label=released)](https://github.com/denis-peshkov/Cross.Identity/releases)
-[![NuGetVersion](https://img.shields.io/nuget/v/Cross.Identity.svg)](https://nuget.org/packages/Cross.Identity/)
-[![NugetDownloads](https://img.shields.io/nuget/dt/Cross.Identity.svg)](https://nuget.org/packages/Cross.Identity/)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Cross.Identity&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Cross.Identity)
-[![issues](https://img.shields.io/github/issues/denis-peshkov/Cross.Identity)](https://github.com/denis-peshkov/Cross.Identity/issues)
-[![.NET PR](https://github.com/denis-peshkov/Cross.Identity/actions/workflows/dotnet.yml/badge.svg?event=pull_request)](https://github.com/denis-peshkov/Cross.Identity/actions/workflows/dotnet.yml)
+[![License](https://img.shields.io/github/license/denis-peshkov/Cross.PepperVault)](LICENSE)
+[![GitHub Release Date](https://img.shields.io/github/release-date/denis-peshkov/Cross.PepperVault?label=released)](https://github.com/denis-peshkov/Cross.PepperVault/releases)
+[![NuGetVersion](https://img.shields.io/nuget/v/Cross.PepperVault.svg)](https://nuget.org/packages/Cross.PepperVault/)
+[![NugetDownloads](https://img.shields.io/nuget/dt/Cross.PepperVault.svg)](https://nuget.org/packages/Cross.PepperVault/)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Cross.PepperVault&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Cross.PepperVault)
+[![issues](https://img.shields.io/github/issues/denis-peshkov/Cross.PepperVault)](https://github.com/denis-peshkov/Cross.PepperVault/issues)
+[![.NET PR](https://github.com/denis-peshkov/Cross.PepperVault/actions/workflows/dotnet.yml/badge.svg?event=pull_request)](https://github.com/denis-peshkov/Cross.PepperVault/actions/workflows/dotnet.yml)
 
-![Size](https://img.shields.io/github/repo-size/denis-peshkov/Cross.Identity)
-[![GitHub contributors](https://img.shields.io/github/contributors/denis-peshkov/Cross.Identity)](https://github.com/denis-peshkov/Cross.Identity/contributors)
-[![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/denis-peshkov/Cross.Identity/latest?label=new+commits)](https://github.com/denis-peshkov/Cross.Identity/commits/master)
-![Activity](https://img.shields.io/github/commit-activity/w/denis-peshkov/Cross.Identity)
-![Activity](https://img.shields.io/github/commit-activity/m/denis-peshkov/Cross.Identity)
-![Activity](https://img.shields.io/github/commit-activity/y/denis-peshkov/Cross.Identity)
+![Size](https://img.shields.io/github/repo-size/denis-peshkov/Cross.PepperVault)
+[![GitHub contributors](https://img.shields.io/github/contributors/denis-peshkov/Cross.PepperVault)](https://github.com/denis-peshkov/Cross.PepperVault/contributors)
+[![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/denis-peshkov/Cross.PepperVault/latest?label=new+commits)](https://github.com/denis-peshkov/Cross.PepperVault/commits/master)
+![Activity](https://img.shields.io/github/commit-activity/w/denis-peshkov/Cross.PepperVault)
+![Activity](https://img.shields.io/github/commit-activity/m/denis-peshkov/Cross.PepperVault)
+![Activity](https://img.shields.io/github/commit-activity/y/denis-peshkov/Cross.PepperVault)
 
-# Cross.Identity
+# Cross.PepperVault
 
-Библиотека идентификации и аутентификации для .NET: настраиваемые сценарии (регистрация, вход, восстановление пароля, выдача и обновление токенов), JWT, Argon2, верификация по email/SMS, процессный движок с JSON-описанием потоков.
+A set of **.NET** libraries for **configurable loading of pepper** values (secret strings used to harden password hashes and similar use cases), with support for **multiple versions**, a **TTL cache**, **reload**, and **FluentValidation** of options at startup. The core defines the `IPepperVaultProvider` contract and shared infrastructure; data sources live in separate NuGet packages.
 
-## Возможности
+## Features
 
-- **Process Engine** — выполнение сценариев (flow) по JSON-дефинициям с последовательными шагами (steps).
-- **Потоки** — регистрация, вход по паролю/коду, forgot password, token, refresh token, получение пользователя, запрос и проверка кодов (email/SMS).
-- **JWT** — выпуск и валидация access/refresh токенов, настраиваемые claims и время жизни.
-- **Безопасность** — хеширование паролей (Argon2), одноразовые коды, нормализация телефонов.
-- **Каналы** — email и SMS (отправка кодов через Cross.Notification).
-- **Формы** — декларативное описание полей и правил валидации (equal, requiredIf, atLeastOneRequired и др.).
+- **Pepper versions** — version dictionary, active current version, rotation without application downtime.
+- **Cache and TTL** — providers built on `PepperProviderBase` cache loads and refresh on timeout and when options change via `IOptionsMonitor`.
+- **Configuration** — `Pepper` section, binding via `AddPepperOptions`, `ValidateOnStart()`, and composite FluentValidation validators.
+- **Providers** — environment, file, Azure Key Vault, AWS Secrets Manager, GCP Secret Manager, HashiCorp Vault, and more; reference only what you need.
+- **Extensibility** — plug in your own source: inherit `PepperProviderBase` and register `IPepperVaultProvider` in DI.
 
+## Target frameworks
 
-## Unit-тесты
+All projects target **netstandard2.1** and **net6.0** through **net10.0** (see `.csproj`).
 
-Используется соглашение именования **Given_When_Then**:
+## Packages
 
-- **Given** — контекст/предусловия.
-- **When** — действие.
-- **Then** — ожидаемый результат.
+| Package | Purpose |
+|---------|---------|
+| **Cross.PepperVault** | Core: options, validation, `IPepperVaultProvider`, `PepperProviderBase`. |
+| **Cross.PepperVault.Env** | Pepper from configuration (`Pepper:ProviderOptions`: current version and dictionary). |
+| **Cross.PepperVault.EnvJson** | JSON from an environment variable. |
+| **Cross.PepperVault.FileJson** | JSON from a file. |
+| **Cross.PepperVault.AzureKvJson** | Azure Key Vault secret whose payload is versioned JSON. |
+| **Cross.PepperVault.AzureKvVersioned** | Multiple secret versions in Key Vault via tags. |
+| **Cross.PepperVault.AwsSecretsJson** | AWS Secrets Manager secret as JSON. |
+| **Cross.PepperVault.GcpSecretManagerJson** | Google Cloud Secret Manager. |
+| **Cross.PepperVault.HcvKv2Json** | HashiCorp Vault KV v2 via VaultSharp. |
 
-Пример: `Given_ExistingUser_When_RequestCode_Then_SendsCodeAndReturnsLastCode`.
+## Quick start
 
-Тесты потоков и шагов расположены в `Cross.Identity.UnitTests/Identity/` (FlowTests, StepTests, StepFactoryTests).
+1. Install the packages, for example: `Cross.PepperVault` + `Cross.PepperVault.Env`.
+2. Register options and the provider:
 
-## Дополнительно
+```csharp
+services.AddPepperOptions<EnvProviderOptions, EnvProviderOptionsValidator>(configuration);
+services.AddSingleton<IPepperVaultProvider, EnvPepperProvider>();
+```
 
-- [LICENSE.md](LICENSE.md) — лицензия.
+3. Sample configuration for `Env`:
+
+```json
+{
+  "Pepper": {
+    "Provider": "Env",
+    "Ttl": "00:10:00",
+    "ProviderOptions": {
+      "Current": 1,
+      "Peppers": {
+        "1": "your-secret-pepper-v1",
+        "2": "your-secret-pepper-v2"
+      }
+    }
+  }
+}
+```
+
+Provider names and `ProviderOptions` shape depend on the package you choose.
+
+## Build
+
+```bash
+dotnet build Cross.PepperVault.slnx -c Release
+```
+
+Packaging: `config.nuspec` in each project directory (after a Release build).
+
+## Unit tests
+
+Tests follow the **Given_When_Then** naming convention:
+
+- **Given** — context / preconditions.
+- **When** — the action under test.
+- **Then** — the expected outcome.
+
+Example: `Given_ExistingUser_When_RequestCode_Then_SendsCodeAndReturnsLastCode`.
+
+Flow and step tests live under `Cross.PepperVault.UnitTests/PepperVault/` (FlowTests, StepTests, StepFactoryTests).
+
+## See also
+
+- [LICENSE](LICENSE) — license.
