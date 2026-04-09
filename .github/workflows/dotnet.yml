@@ -103,7 +103,7 @@ jobs:
       - name: NuGet Pack (all packages)
         run: |
           set -euo pipefail
-          VERSION="${{ steps.gitversion.outputs.semVer }}"
+          VERSION="${{ env.semVer }}"
           mkdir -p "${GITHUB_WORKSPACE}/artifacts/nuget"
           for p in \
             Cross.PepperVault \
