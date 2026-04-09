@@ -33,17 +33,17 @@ All projects target **netstandard2.1** and **net6.0** through **net10.0** (see `
 
 Per-package NuGet download and latest-version badges. **Issues:** the core package row shows the repo-wide open-issue count; each provider row shows the count for a GitHub search scoped to this repository and the full NuGet package id (there are no per-package labels in this repo).
 
-| Package | Downloads | NuGet latest | Issues | Notes |
-| ------- | --------- | ------------ | ------ | ----- |
-| **Cross.PepperVault** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault)](https://www.nuget.org/packages/Cross.PepperVault/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault)](https://www.nuget.org/packages/Cross.PepperVault/) | [![issues](https://img.shields.io/github/issues/denis-peshkov/Cross.PepperVault)](https://github.com/denis-peshkov/Cross.PepperVault/issues) | Core: options, validation, `IPepperVaultProvider`, `PepperProviderBase`. |
-| **Cross.PepperVault.Env** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.Env)](https://www.nuget.org/packages/Cross.PepperVault.Env/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.Env)](https://www.nuget.org/packages/Cross.PepperVault.Env/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.Env)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.Env) | Pepper from configuration (`Pepper:ProviderOptions`: current version and dictionary). |
-| **Cross.PepperVault.EnvJson** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.EnvJson)](https://www.nuget.org/packages/Cross.PepperVault.EnvJson/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.EnvJson)](https://www.nuget.org/packages/Cross.PepperVault.EnvJson/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.EnvJson)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.EnvJson) | JSON from an environment variable. |
-| **Cross.PepperVault.FileJson** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.FileJson)](https://www.nuget.org/packages/Cross.PepperVault.FileJson/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.FileJson)](https://www.nuget.org/packages/Cross.PepperVault.FileJson/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.FileJson)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.FileJson) | JSON from a file. |
-| **Cross.PepperVault.AzureKvJson** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.AzureKvJson)](https://www.nuget.org/packages/Cross.PepperVault.AzureKvJson/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.AzureKvJson)](https://www.nuget.org/packages/Cross.PepperVault.AzureKvJson/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.AzureKvJson)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.AzureKvJson) | Azure Key Vault secret whose payload is versioned JSON. |
-| **Cross.PepperVault.AzureKvVersioned** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.AzureKvVersioned)](https://www.nuget.org/packages/Cross.PepperVault.AzureKvVersioned/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.AzureKvVersioned)](https://www.nuget.org/packages/Cross.PepperVault.AzureKvVersioned/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.AzureKvVersioned)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.AzureKvVersioned) | Multiple secret versions in Key Vault via tags. |
-| **Cross.PepperVault.AwsSecretsJson** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.AwsSecretsJson)](https://www.nuget.org/packages/Cross.PepperVault.AwsSecretsJson/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.AwsSecretsJson)](https://www.nuget.org/packages/Cross.PepperVault.AwsSecretsJson/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.AwsSecretsJson)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.AwsSecretsJson) | AWS Secrets Manager secret as JSON. |
-| **Cross.PepperVault.GcpSecretManagerJson** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.GcpSecretManagerJson)](https://www.nuget.org/packages/Cross.PepperVault.GcpSecretManagerJson/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.GcpSecretManagerJson)](https://www.nuget.org/packages/Cross.PepperVault.GcpSecretManagerJson/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.GcpSecretManagerJson)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.GcpSecretManagerJson) | Google Cloud Secret Manager. |
-| **Cross.PepperVault.HcvKv2Json** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.HcvKv2Json)](https://www.nuget.org/packages/Cross.PepperVault.HcvKv2Json/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.HcvKv2Json)](https://www.nuget.org/packages/Cross.PepperVault.HcvKv2Json/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.HcvKv2Json)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.HcvKv2Json) | HashiCorp Vault KV v2 via VaultSharp. |
+| Package | Downloads | NuGet latest | Issues |
+| ------- | --------- | ------------ | ------ |
+| **Cross.PepperVault** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault)](https://www.nuget.org/packages/Cross.PepperVault/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault)](https://www.nuget.org/packages/Cross.PepperVault/) | [![issues](https://img.shields.io/github/issues/denis-peshkov/Cross.PepperVault)](https://github.com/denis-peshkov/Cross.PepperVault/issues) |
+| **Cross.PepperVault.Env** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.Env)](https://www.nuget.org/packages/Cross.PepperVault.Env/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.Env)](https://www.nuget.org/packages/Cross.PepperVault.Env/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.Env)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.Env) |
+| **Cross.PepperVault.EnvJson** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.EnvJson)](https://www.nuget.org/packages/Cross.PepperVault.EnvJson/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.EnvJson)](https://www.nuget.org/packages/Cross.PepperVault.EnvJson/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.EnvJson)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.EnvJson) |
+| **Cross.PepperVault.FileJson** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.FileJson)](https://www.nuget.org/packages/Cross.PepperVault.FileJson/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.FileJson)](https://www.nuget.org/packages/Cross.PepperVault.FileJson/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.FileJson)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.FileJson) |
+| **Cross.PepperVault.AzureKvJson** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.AzureKvJson)](https://www.nuget.org/packages/Cross.PepperVault.AzureKvJson/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.AzureKvJson)](https://www.nuget.org/packages/Cross.PepperVault.AzureKvJson/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.AzureKvJson)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.AzureKvJson) |
+| **Cross.PepperVault.AzureKvVersioned** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.AzureKvVersioned)](https://www.nuget.org/packages/Cross.PepperVault.AzureKvVersioned/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.AzureKvVersioned)](https://www.nuget.org/packages/Cross.PepperVault.AzureKvVersioned/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.AzureKvVersioned)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.AzureKvVersioned) |
+| **Cross.PepperVault.AwsSecretsJson** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.AwsSecretsJson)](https://www.nuget.org/packages/Cross.PepperVault.AwsSecretsJson/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.AwsSecretsJson)](https://www.nuget.org/packages/Cross.PepperVault.AwsSecretsJson/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.AwsSecretsJson)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.AwsSecretsJson) |
+| **Cross.PepperVault.GcpSecretManagerJson** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.GcpSecretManagerJson)](https://www.nuget.org/packages/Cross.PepperVault.GcpSecretManagerJson/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.GcpSecretManagerJson)](https://www.nuget.org/packages/Cross.PepperVault.GcpSecretManagerJson/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.GcpSecretManagerJson)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.GcpSecretManagerJson) |
+| **Cross.PepperVault.HcvKv2Json** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.HcvKv2Json)](https://www.nuget.org/packages/Cross.PepperVault.HcvKv2Json/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.HcvKv2Json)](https://www.nuget.org/packages/Cross.PepperVault.HcvKv2Json/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.HcvKv2Json)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.HcvKv2Json) |
 
 > **Target frameworks:** libraries target **netstandard2.1** and **.NET 6** through **.NET 10**. Keep **Cross.PepperVault** and your provider packages on **compatible NuGet versions** (same release line); pin versions in production.
 
@@ -61,6 +61,42 @@ Install-Package Cross.PepperVault.HcvKv2Json
 ```
 
 Then register **AddPepperOptions** (with your provider options and validator types) and **IPepperVaultProvider** in DI — see **Quick start** below.
+
+### `Cross.PepperVault`
+
+Core library: options, validation, `IPepperVaultProvider`, `PepperProviderBase`.
+
+### `Cross.PepperVault.Env`
+
+Pepper values from configuration (`Pepper:ProviderOptions`: current version and dictionary).
+
+### `Cross.PepperVault.EnvJson`
+
+Versioned pepper JSON stored in an environment variable.
+
+### `Cross.PepperVault.FileJson`
+
+Versioned pepper JSON loaded from a file.
+
+### `Cross.PepperVault.AzureKvJson`
+
+Azure Key Vault secret whose payload is versioned JSON.
+
+### `Cross.PepperVault.AzureKvVersioned`
+
+Multiple Key Vault secret versions mapped via tags.
+
+### `Cross.PepperVault.AwsSecretsJson`
+
+AWS Secrets Manager secret containing versioned JSON.
+
+### `Cross.PepperVault.GcpSecretManagerJson`
+
+Google Cloud Secret Manager as the source.
+
+### `Cross.PepperVault.HcvKv2Json`
+
+HashiCorp Vault KV v2 via VaultSharp.
 
 ## Quick start
 
