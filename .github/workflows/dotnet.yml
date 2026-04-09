@@ -94,7 +94,7 @@ jobs:
             -Dsonar.organization=peshkov
             -Dsonar.projectKey=Cross.PepperVault
             -Dsonar.cs.opencover.reportsPaths=TestResults/**/coverage.opencover.xml
-            -Dsonar.sources=Cross.PepperVault,Cross.PepperVault.AwsSecretsJson,Cross.PepperVault.AzureKvJson,Cross.PepperVault.AzureKvVersioned,Cross.PepperVault.Env,Cross.PepperVault.EnvJson,Cross.PepperVault.FileJson,Cross.PepperVault.GcpSecretManagerJson,Cross.PepperVault.HcvKv2Json
+            -Dsonar.sources=Cross.PepperVault
             -Dsonar.tests=Cross.PepperVault.Tests
             -Dsonar.verbose=true
         env:
