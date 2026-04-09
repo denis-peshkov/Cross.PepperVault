@@ -45,9 +45,32 @@ Per-package NuGet download and latest-version badges. **Issues:** the core packa
 | **Cross.PepperVault.GcpSecretManagerJson** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.GcpSecretManagerJson)](https://www.nuget.org/packages/Cross.PepperVault.GcpSecretManagerJson/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.GcpSecretManagerJson)](https://www.nuget.org/packages/Cross.PepperVault.GcpSecretManagerJson/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.GcpSecretManagerJson)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.GcpSecretManagerJson) | Google Cloud Secret Manager. |
 | **Cross.PepperVault.HcvKv2Json** | [![NuGet](https://img.shields.io/nuget/dt/Cross.PepperVault.HcvKv2Json)](https://www.nuget.org/packages/Cross.PepperVault.HcvKv2Json/) | [![NuGet](https://img.shields.io/nuget/v/Cross.PepperVault.HcvKv2Json)](https://www.nuget.org/packages/Cross.PepperVault.HcvKv2Json/) | [![issues](https://img.shields.io/github/issues-search?query=repo%3Adenis-peshkov%2FCross.PepperVault+is%3Aissue+Cross.PepperVault.HcvKv2Json)](https://github.com/denis-peshkov/Cross.PepperVault/issues?q=is%3Aissue+Cross.PepperVault.HcvKv2Json) | HashiCorp Vault KV v2 via VaultSharp. |
 
+> **Target frameworks:** libraries target **netstandard2.1** and **.NET 6** through **.NET 10**. Keep **Cross.PepperVault** and your provider packages on **compatible NuGet versions** (same release line); pin versions in production.
+
+```powershell
+# Package Manager Console (Visual Studio) — install core + any providers you need
+Install-Package Cross.PepperVault
+Install-Package Cross.PepperVault.Env
+Install-Package Cross.PepperVault.EnvJson
+Install-Package Cross.PepperVault.FileJson
+Install-Package Cross.PepperVault.AzureKvJson
+Install-Package Cross.PepperVault.AzureKvVersioned
+Install-Package Cross.PepperVault.AwsSecretsJson
+Install-Package Cross.PepperVault.GcpSecretManagerJson
+Install-Package Cross.PepperVault.HcvKv2Json
+```
+
+Then register **AddPepperOptions** (with your provider options and validator types) and **IPepperVaultProvider** in DI — see **Quick start** below.
+
 ## Quick start
 
-1. Install the packages, for example: `Cross.PepperVault` + `Cross.PepperVault.Env`.
+1. Add NuGet packages (example: core + Env):
+
+```bash
+dotnet add package Cross.PepperVault
+dotnet add package Cross.PepperVault.Env
+```
+
 2. Register options and the provider:
 
 ```csharp
@@ -55,7 +78,7 @@ services.AddPepperOptions<EnvProviderOptions, EnvProviderOptionsValidator>(confi
 services.AddSingleton<IPepperVaultProvider, EnvPepperProvider>();
 ```
 
-3. Sample configuration for `Env`:
+3. Sample configuration for **Env**:
 
 ```json
 {
