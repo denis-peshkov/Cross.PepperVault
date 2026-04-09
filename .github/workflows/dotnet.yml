@@ -22,7 +22,7 @@ jobs:
 
     env:
       BUILD_CONFIG: 'Release'
-      SOLUTION: 'Cross.Identity.slnx'
+      SOLUTION: 'Cross.PepperVault.slnx'
 
     runs-on: ubuntu-22.04 # ubuntu-latest
 
@@ -68,9 +68,9 @@ jobs:
             -p:FileVersion=${GitVersion_AssemblySemFileVer} \
             -p:InformationalVersion="${GitVersion_InformationalVersion}" \
             -p:Company="Denis Peshkov" \
-            -p:Product="Cross.Identity" \
-            -p:Description="Cross.Identity: identity and authentication flows with JWT and process engine. Published on Nuget at https://www.nuget.org/packages/Cross.Identity" \
-            -p:RepositoryUrl="https://github.com/denis-peshkov/Cross.Identity.git" \
+            -p:Product="Cross.PepperVault" \
+            -p:Description="Cross.PepperVault: configurable pepper loading for .NET. Published on NuGet: https://www.nuget.org/packages/Cross.PepperVault" \
+            -p:RepositoryUrl="https://github.com/denis-peshkov/Cross.PepperVault.git" \
             -p:RepositoryType=git \
             -p:CLSCompliant=true \
             -p:NeutralLanguage=en
@@ -91,16 +91,33 @@ jobs:
         with:
           args: >
             -Dsonar.organization=peshkov
-            -Dsonar.projectKey=Cross.Identity
+            -Dsonar.projectKey=Cross.PepperVault
             -Dsonar.cs.opencover.reportsPaths=TestResults/**/coverage.opencover.xml
-            -Dsonar.sources=Cross.Identity/
-            -Dsonar.tests=Cross.Identity.UnitTests/
+            -Dsonar.sources=Cross.PepperVault,Cross.PepperVault.AwsSecretsJson,Cross.PepperVault.AzureKvJson,Cross.PepperVault.AzureKvVersioned,Cross.PepperVault.Env,Cross.PepperVault.EnvJson,Cross.PepperVault.FileJson,Cross.PepperVault.GcpSecretManagerJson,Cross.PepperVault.HcvKv2Json
+            -Dsonar.tests=Cross.PepperVault.UnitTests
             -Dsonar.verbose=true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: Nuget Pack
-        run: nuget pack _nuget/config.nuspec -Symbols -Version ${{ env.semVer }}
+      - name: NuGet Pack (all packages)
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.gitversion.outputs.semVer }}"
+          mkdir -p "${GITHUB_WORKSPACE}/artifacts/nuget"
+          for p in \
+            Cross.PepperVault \
+            Cross.PepperVault.Env \
+            Cross.PepperVault.EnvJson \
+            Cross.PepperVault.FileJson \
+            Cross.PepperVault.AzureKvJson \
+            Cross.PepperVault.AzureKvVersioned \
+            Cross.PepperVault.AwsSecretsJson \
+            Cross.PepperVault.GcpSecretManagerJson \
+            Cross.PepperVault.HcvKv2Json
+          do
+            (cd "$p" && nuget pack config.nuspec -Version "$VERSION" -OutputDirectory "${GITHUB_WORKSPACE}/artifacts/nuget" -NoDefaultExcludes)
+          done
+          ls -la "${GITHUB_WORKSPACE}/artifacts/nuget"
 
       - name: Create git Tag
         if: ${{ contains('refs/heads/master', github.ref) || contains('refs/heads/release', github.ref) || contains('refs/heads/hotfix', github.ref) }}
@@ -117,4 +134,9 @@ jobs:
 
       - name: Nuget Push
         if: ${{ !startsWith(github.ref, 'refs/pull') }}
-        run: nuget push **/Cross.Identity.${{ env.semVer }}.symbols.nupkg -ApiKey ${{ secrets.NUGET_API_KEY }} -Source "https://api.nuget.org/v3/index.json" -SkipDuplicate
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          for f in "${GITHUB_WORKSPACE}"/artifacts/nuget/*.nupkg; do
+            dotnet nuget push "$f" --source "https://api.nuget.org/v3/index.json" --api-key "${{ secrets.NUGET_API_KEY }}" --skip-duplicate
+          done
