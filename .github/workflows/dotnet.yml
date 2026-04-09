@@ -77,7 +77,8 @@ jobs:
 
       - name: Run tests
         run: >
-          dotnet test /p:Configuration=$BUILD_CONFIG
+          dotnet test "$SOLUTION"
+          -c "$BUILD_CONFIG"
           --no-restore
           --no-build
           --verbosity normal
@@ -94,7 +95,7 @@ jobs:
             -Dsonar.projectKey=Cross.PepperVault
             -Dsonar.cs.opencover.reportsPaths=TestResults/**/coverage.opencover.xml
             -Dsonar.sources=Cross.PepperVault,Cross.PepperVault.AwsSecretsJson,Cross.PepperVault.AzureKvJson,Cross.PepperVault.AzureKvVersioned,Cross.PepperVault.Env,Cross.PepperVault.EnvJson,Cross.PepperVault.FileJson,Cross.PepperVault.GcpSecretManagerJson,Cross.PepperVault.HcvKv2Json
-            -Dsonar.tests=Cross.PepperVault.UnitTests
+            -Dsonar.tests=Cross.PepperVault.Tests
             -Dsonar.verbose=true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

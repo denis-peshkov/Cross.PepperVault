@@ -19,5 +19,6 @@
   <Project Path="Cross.PepperVault.FileJson\Cross.PepperVault.FileJson.csproj" />
   <Project Path="Cross.PepperVault.GcpSecretManagerJson\Cross.PepperVault.GcpSecretManagerJson.csproj" />
   <Project Path="Cross.PepperVault.HcvKv2Json\Cross.PepperVault.HcvKv2Json.csproj" />
+  <Project Path="Cross.PepperVault.Tests\Cross.PepperVault.Tests.csproj" />
   <Project Path="Cross.PepperVault\Cross.PepperVault.csproj" />
 </Solution>
