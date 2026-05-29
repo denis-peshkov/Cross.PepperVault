@@ -116,7 +116,7 @@ Reads **`SecretName`** formatted as **`projects/{projectId}/secrets/{secretId}`*
 
 ### Target frameworks and version lines
 
-> **Target frameworks:** libraries target **netstandard2.1** and **.NET 6** through **.NET 10**. Keep **Cross.PepperVault** and your provider packages on **compatible NuGet versions** (same release line); pin versions in production.
+> **Target frameworks:** libraries target **netstandard2.1** and **.NET 6** through **.NET 10**. Each provider package declares a **fixed** dependency on **Cross.PepperVault** at the **same version** as the provider (for example, `Cross.PepperVault.EnvJson` 1.2.0 requires exactly `Cross.PepperVault` 1.2.0). Installing only a provider is enough — NuGet restores the matching core automatically.
 
 ### Package Manager Console
 
@@ -177,7 +177,7 @@ For each provider, set **`Pepper.Provider`** to the literal expected by that pac
 dotnet build Cross.PepperVault.slnx -c Release
 ```
 
-Packaging: `config.nuspec` in each project directory (after a Release build).
+Packaging: `config.nuspec` in each project directory (after a Release build). Provider nuspecs reference `Cross.PepperVault` as `[$version$]` so pack/publish pins the core to the same semver as the provider.
 
 ## Unit tests
 
