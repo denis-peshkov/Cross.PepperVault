@@ -1,39 +1,35 @@
-using System.Collections.ObjectModel;
-using System.Threading;
-using Cross.PepperVault.Tests.TestSupport;
-
 namespace Cross.PepperVault.Tests.Providers;
 
 [TestFixture]
 public sealed class PepperProviderBaseTests
 {
     [Test]
-    public void Given_ValidPayload_When_ReloadAsync_Then_ExposesCurrentAndPeppers()
+    public void Given_ValidPayload_When_ReadProperties_Then_ExposesCurrentAndPeppers()
     {
         var ttl = new Mock<IOptionsMonitor<TimeSpan>>();
         ttl.Setup(m => m.CurrentValue).Returns(TimeSpan.FromDays(1));
         var peppers = new ReadOnlyDictionary<short, string>(new Dictionary<short, string> { [2] = "secret", [1] = "old" });
         var sut = new TestPepperProvider(ttl.Object, (2, peppers));
 
-        sut.Invoking(s => s.ReloadAsync().GetAwaiter().GetResult()).Should().NotThrow();
+        sut.Invoking(s => _ = s.CurrentVersion).Should().NotThrow();
 
         sut.CurrentVersion.Should().Be((short)2);
         sut.Peppers.Should().HaveCount(2);
-        sut.TryGetCurrentVersion(out var p).Should().BeTrue();
+        sut.TryGetCurrentValue(out var p).Should().BeTrue();
         p.Should().Be("secret");
-        sut.TryGet(1, out var oldP).Should().BeTrue();
+        sut.TryGetValue(1, out var oldP).Should().BeTrue();
         oldP.Should().Be("old");
     }
 
     [Test]
-    public void Given_CurrentMissingInMap_When_ReloadAsync_Then_Throws()
+    public void Given_CurrentMissingInMap_When_ReadProperties_Then_Throws()
     {
         var ttl = new Mock<IOptionsMonitor<TimeSpan>>();
         ttl.Setup(m => m.CurrentValue).Returns(TimeSpan.FromDays(1));
         var peppers = new ReadOnlyDictionary<short, string>(new Dictionary<short, string> { [1] = "only" });
         var sut = new TestPepperProvider(ttl.Object, (2, peppers));
 
-        sut.Invoking(s => s.ReloadAsync().GetAwaiter().GetResult())
+        sut.Invoking(s => _ = s.CurrentVersion)
             .Should().Throw<InvalidOperationException>()
             .WithMessage("*Current pepper missing*");
     }
@@ -89,29 +85,14 @@ public sealed class PepperProviderBaseTests
         var peppers = new ReadOnlyDictionary<short, string>(new Dictionary<short, string> { [1] = "x" });
         var sut = new TestPepperProvider(ttl.Object, (1, peppers));
 
-        sut.ReloadAsync().GetAwaiter().GetResult();
+        _ = sut.CurrentVersion;
 
-        sut.TryGet(99, out var p).Should().BeFalse();
+        sut.TryGetValue(99, out var p).Should().BeFalse();
         p.Should().BeNull();
     }
 
     [Test]
-    public async Task Given_CancelledToken_When_ReloadAsync_Then_ThrowsOperationCanceled()
-    {
-        var ttl = new Mock<IOptionsMonitor<TimeSpan>>();
-        ttl.Setup(m => m.CurrentValue).Returns(TimeSpan.FromDays(1));
-        var peppers = new ReadOnlyDictionary<short, string>(new Dictionary<short, string> { [1] = "x" });
-        var sut = new TestPepperProvider(ttl.Object, (1, peppers));
-        using var cts = new CancellationTokenSource();
-        cts.Cancel();
-
-        var act = async () => await sut.ReloadAsync(cts.Token).ConfigureAwait(false);
-
-        await act.Should().ThrowAsync<OperationCanceledException>();
-    }
-
-    [Test]
-    public void Given_LoadFailsOnce_When_RetryReload_Then_Succeeds()
+    public void Given_LoadFailsOnce_When_RetryRead_Then_Succeeds()
     {
         var ttl = new Mock<IOptionsMonitor<TimeSpan>>();
         ttl.Setup(m => m.CurrentValue).Returns(TimeSpan.FromDays(1));
@@ -121,37 +102,41 @@ public sealed class PepperProviderBaseTests
             new InvalidOperationException("load-boom"),
             (1, peppers));
 
-        sut.Invoking(s => s.ReloadAsync().GetAwaiter().GetResult())
+        sut.Invoking(s => _ = s.CurrentVersion)
             .Should().Throw<InvalidOperationException>()
             .WithMessage("load-boom");
 
-        sut.Invoking(s => s.ReloadAsync().GetAwaiter().GetResult()).Should().NotThrow();
+        sut.Invoking(s => _ = s.CurrentVersion).Should().NotThrow();
         sut.CurrentVersion.Should().Be((short)1);
     }
 
     [Test]
-    public void Given_PeppersProperty_When_AfterReload_Then_ReturnsSameDictionaryReferencePath()
+    public void Given_PeppersProperty_When_AfterLoad_Then_ReturnsSameDictionaryReferencePath()
     {
         var ttl = new Mock<IOptionsMonitor<TimeSpan>>();
         ttl.Setup(m => m.CurrentValue).Returns(TimeSpan.FromDays(1));
         var peppers = new ReadOnlyDictionary<short, string>(new Dictionary<short, string> { [3] = "p" });
         var sut = new TestPepperProvider(ttl.Object, (3, peppers));
 
-        sut.ReloadAsync().GetAwaiter().GetResult();
+        _ = sut.CurrentVersion;
 
         sut.Peppers[3].Should().Be("p");
     }
 
     [Test]
-    public async Task Given_ConcurrentReload_When_TwoCalls_Then_BothComplete()
+    [NonParallelizable]
+    public async Task Given_ExpiredTtl_When_ConcurrentRead_Then_ReloadsFromBothThreads()
     {
         var ttl = new Mock<IOptionsMonitor<TimeSpan>>();
-        ttl.Setup(m => m.CurrentValue).Returns(TimeSpan.FromDays(1));
+        ttl.Setup(m => m.CurrentValue).Returns(TimeSpan.Zero);
         var peppers = new ReadOnlyDictionary<short, string>(new Dictionary<short, string> { [1] = "x" });
         var sut = new TestPepperProvider(ttl.Object, (1, peppers));
 
-        var t1 = sut.ReloadAsync();
-        var t2 = sut.ReloadAsync();
+        _ = sut.CurrentVersion;
+        Thread.Sleep(10);
+
+        var t1 = Task.Run(() => _ = sut.CurrentVersion);
+        var t2 = Task.Run(() => _ = sut.Peppers);
         await Task.WhenAll(t1, t2).ConfigureAwait(false);
 
         sut.CurrentVersion.Should().Be((short)1);

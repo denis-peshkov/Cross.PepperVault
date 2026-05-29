@@ -33,19 +33,19 @@ public abstract class PepperProviderBase : IPepperVaultProvider
         }
     }
 
-    public bool TryGetCurrentVersion([MaybeNullWhen(false)] out string pepper)
+    public bool TryGetCurrentValue([MaybeNullWhen(false)] out string pepper)
     {
         EnsureFreshAsync();
         return _peppers.TryGetValue(_current, out pepper);
     }
 
-    public bool TryGet(short version, [MaybeNullWhen(false)] out string pepper)
+    public bool TryGetValue(short version, [MaybeNullWhen(false)] out string pepper)
     {
         EnsureFreshAsync();
         return _peppers.TryGetValue(version, out pepper);
     }
 
-    public async Task ReloadAsync(CancellationToken cancellationToken = default)
+    private async Task ReloadAsync(CancellationToken cancellationToken = default)
     {
         // защита от «табунного набега»
         await _semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
