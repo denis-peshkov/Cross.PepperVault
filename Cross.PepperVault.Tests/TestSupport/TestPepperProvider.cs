@@ -1,6 +1,3 @@
-using System.Threading;
-using Cross.PepperVault.Providers;
-
 namespace Cross.PepperVault.Tests.TestSupport;
 
 internal sealed class TestPepperProvider : PepperProviderBase

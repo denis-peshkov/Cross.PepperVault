@@ -1,5 +1,3 @@
-using Cross.PepperVault.Providers;
-
 namespace Cross.PepperVault.Tests.Providers;
 
 [TestFixture]
